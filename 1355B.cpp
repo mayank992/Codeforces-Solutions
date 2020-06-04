@@ -19,30 +19,51 @@ using namespace std;
 const int MOD  =  1e9 + 7;
 const ll INF   =  1e12;
 
-int main() { 
+// int main() { 
+//     ios_base::sync_with_stdio(false);
+//     cin.tie(NULL);
+//     int t;
+//     cin >> t;
+//     while(t--) {
+//         int n;
+//         cin >> n;   int arr[n];
+//         for(int i = 0; i < n; i++) {
+//             cin >> arr[i];
+//         }
+//         sort(arr, arr + n, greater<int>());
+//         int dp[n+1] = {0};
+//         for(int i = n-1; i >= 0; i--) {
+//             int idx = i + arr[i] - 1;
+//             if(idx < n) {
+//                 dp[i] = max(dp[i+1], dp[idx + 1] + 1);
+//             }
+//             else
+//                 dp[i] = dp[i+1];
+//         }
+//         cout << dp[0] << "\n";
+//     }
+//     return 0;
+// }
+
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int t;
     cin >> t;
     while(t--) {
-        int n;
+        int n;  
         cin >> n;   int arr[n];
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++)  
             cin >> arr[i];
+        sort(arr, arr+n);
+        int i = 0, result = 0, count = 0, groupSize = 0;
+        while(i < n) {
+            count++;    groupSize = arr[i];
+            if(count == groupSize)
+                count = 0, result += 1;
+            i++;
         }
-        sort(arr, arr + n, greater<int>());
-        int dp[n+1] = {0};
-        for(int i = n-1; i >= 0; i--) {
-            int idx = i + arr[i] - 1;
-            if(idx < n) {
-                dp[i] = max(dp[i+1], dp[idx + 1] + 1);
-            }
-            else
-                dp[i] = dp[i+1];
-        }
-        cout << dp[0] << "\n";
+        cout << result << "\n";
     }
     return 0;
 }
-
-

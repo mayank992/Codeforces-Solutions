@@ -17,36 +17,50 @@ using namespace std;
 const int MOD  =  1e9 + 7;
 const ll INF   =  1e12;
 
-int search(int dp[], int l, int h, int key) {
-    while(l <= h) {
-        int mid = (l + h) / 2;
-        if(dp[mid] == key)
-            return mid;
-        else if(key < dp[mid])
-            h = mid - 1;
-        else 
-            l = mid + 1;
-    }
-    return l;
-}
-
-//O(nlogn)
+// O(nlogn) => BEST
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n, m, num, len = -1, dp[5000] = {0};
-    double x;
+    int n, m, ele;  double x;
     cin >> n >> m;
-    for(int i = 0; i < n; i++) {
-        cin >> num >> x;
-        int idx = search(dp, 0, len, num);
-        if(idx > len)
-            len++;
-        dp[idx] = num;
+    vector<int> arr(n), vec;
+    for(int i = 0; i < n; i++) 
+        cin >> arr[i] >> x;
+    vec.pb(arr[0]);
+    for(int i = 1; i < n; i++) {
+        auto idx = upper_bound(all(vec), arr[i]);
+        if(idx == vec.end())
+            vec.pb(arr[i]);
+        else 
+            *idx = arr[i];
     }
-    cout << n - (len + 1);
+    cout <<  n - vec.size();
     return 0;
 }
+
+// int main() {
+//     ios_base::sync_with_stdio(false);
+//     cin.tie(NULL);
+//     int n, m, ele;  double x;
+//     cin >> n >> m;
+//     vector<int> arr(n), vec(n+1, INT_MAX);
+//     for(int i = 0; i < n; i++) 
+//         cin >> arr[i] >> x;
+//     vec[0] = INT_MIN;
+//     for(int i = 0; i < n; i++) {
+//         auto idx = upper_bound(all(vec), arr[i]) - vec.begin();
+//         if(vec[idx - 1] <= arr[i] && arr[i] < vec[idx])
+//             vec[idx] = arr[i];
+//     }
+//     int result = 1;
+//     for(int i = 0; i <= n; i++) {
+//         if(vec[i] < INT_MAX)
+//             result = i;
+//     }
+//     cout << n - result;
+//     return 0;
+// }
+
 
 // int main() {
 //     // freopen("input.txt","r",stdin);
